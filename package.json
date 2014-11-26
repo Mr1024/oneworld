@@ -1,0 +1,31 @@
+{
+    "name": "oneword",
+    "version": "0.0.1",
+    "description": "a proxy for GFW",
+    "main": "proxy.js",
+    "keywords": [
+        "nodeserver", "GFW", "翻墙", "nodejs","server"
+    ],
+    "homepage": "https://github.com/Mr1024/oneword",
+    "author": {
+        "name": "Mr1024",
+        "email": "publiczhongemail@163.com",
+        "url": "https://github.com/Mr1024"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:Mr1024/oneword.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Mr1024/oneword/issues"
+    },
+    "bin": {
+        "nhs": "proxy.js"
+    },
+    "dependencies": {
+        "ssh2":">=0.3.6",
+        "socksv5": ">=0.0.4"
+    },
+    "preferGlobal": true,
+    "license": "MIT"
+}
