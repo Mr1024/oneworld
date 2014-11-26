@@ -1,8 +1,16 @@
 #!/usr/bin/env node
 
 var socks = require('socksv5'),
-    Connection = require('ssh2');
-
+    Connection = require('ssh2'),
+    fs = require('fs');;
+fs.readFile('./lib/config.json', {
+    "encoding": "utf8"
+}, function(err, data) {
+    if (!err) {
+        var data = JSON.parse(data);
+        console.log(data);
+    }
+});
 var ssh_config = {
     host: '63.141.248.218',
     port: 1308,
