@@ -24,7 +24,8 @@
     },
     "dependencies": {
         "ssh2":">=0.3.6",
-        "socksv5": ">=0.0.4"
+        "socksv5": ">=0.0.4",
+        "net-ping":">=1.1.11"
     },
     "preferGlobal": true,
     "license": "MIT"
