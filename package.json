@@ -4,7 +4,7 @@
     "description": "a proxy for GFW",
     "main": "proxy.js",
     "keywords": [
-        "nodeserver", "GFW", "翻墙", "nodejs","server"
+        "nodeserver", "GFW", "翻墙", "nodejs", "server"
     ],
     "homepage": "https://github.com/Mr1024/oneword",
     "author": {
@@ -23,9 +23,10 @@
         "nhs": "proxy.js"
     },
     "dependencies": {
-        "ssh2":">=0.3.6",
+        "ssh2": ">=0.3.6",
         "socksv5": ">=0.0.4",
-        "net-ping":">=1.1.11"
+        "ping-net": ">=0.0.1",
+        "request": ">=2.48.0"
     },
     "preferGlobal": true,
     "license": "MIT"
