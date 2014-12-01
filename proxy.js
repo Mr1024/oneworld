@@ -21,8 +21,10 @@ fs.readFile('./lib/config.json', {
         }
         ping.ping(options, function(result) {
             var resultdata = result[0];
+            console.log(result);
             if (!isNaN(resultdata.avg)) {
                 ssh_config = data[resultdata.address];
+                console.log(ssh_config);
                 server();
             }
 
