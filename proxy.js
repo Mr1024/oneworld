@@ -3,11 +3,33 @@
 var socks = require('socksv5'),
     Connection = require('ssh2'),
     fs = require('fs'),
+    cluster = require('cluster'),
+    os = require('os'),
     ping = require('ping-net'),
     webspider = require('./lib/webspider'),
-    ssh_config;
+    ssh_config,
+    numCPUs = os.cpus().length,
+    workers = {};
+if (cluster.isMaster) {
+    cluster.on('death', function(worker) {
+        delete workers[worker.pid];
+        worker = cluster.fork();
+        workers[worker.pid] = worker;
+    });
+    for (var i = 0; i < numCPUs; i++) {
+        var worker = cluster.fork();
+        workers[worker.pid] = worker;
+    }
+} else {
+    init();
+}
+process.on('SIGTERM', function() {
+    for (var pid in workers) {
+        process.kill(pid);
+    }
+    process.exit(0)
+})
 
-init();
 
 function init() {
     console.log("Initializing data, please wait·······");
@@ -31,7 +53,7 @@ function init() {
                 }
 
             }, true);
-        }else{
+        } else {
             webspider.connServer(init);
         }
     });
