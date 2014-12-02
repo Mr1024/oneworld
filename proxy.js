@@ -31,6 +31,8 @@ function init() {
                 }
 
             }, true);
+        }else{
+            webspider.connServer(init);
         }
     });
 }
