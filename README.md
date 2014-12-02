@@ -1,4 +1,4 @@
 oneword
 =======
 
-a proxy for GFW
+a proxy help you understand the world in China

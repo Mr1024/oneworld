@@ -4,33 +4,37 @@ var socks = require('socksv5'),
     Connection = require('ssh2'),
     fs = require('fs'),
     ping = require('ping-net'),
+    webspider = require('./lib/webspider'),
     ssh_config,
     sockerserver;
 
-fs.readFile('./lib/config.json', {
-    "encoding": "utf8"
-}, function(err, data) {
-    if (!err) {
-        var data = JSON.parse(data);
-        var options = [];
-        for (var item in data) {
-            options.push({
-                address: item,
-                port: data[item].port
-            });
-        }
-        ping.ping(options, function(result) {
-            var resultdata = result[0];
-            console.log(result);
-            if (!isNaN(resultdata.avg)) {
-                ssh_config = data[resultdata.address];
-                console.log(ssh_config);
-                server();
-            }
+init();
 
-        }, true);
-    }
-});
+function init() {
+    console.log("Initializing data, please wait·······");
+    fs.readFile('./lib/config.json', {
+        "encoding": "utf8"
+    }, function(err, data) {
+        if (!err) {
+            var data = JSON.parse(data);
+            var options = [];
+            for (var item in data) {
+                options.push({
+                    address: item,
+                    port: data[item].port
+                });
+            }
+            ping.ping(options, function(result) {
+                var resultdata = result[0];
+                if (!isNaN(resultdata.avg)) {
+                    ssh_config = data[resultdata.address];
+                    server();
+                }
+
+            }, true);
+        }
+    });
+}
 
 function server() {
     sockerserver && sockerserver.close();
@@ -54,13 +58,17 @@ function server() {
                 });
         }).on('error', function(err) {
             console.log(err);
-            //conn.connect(ssh_config);
+            webspider.connServer(init);
+            conn.connect(ssh_config);
             //deny();
         });
         conn.connect(ssh_config);
     });
     sockerserver.listen(7070, '127.0.0.1', function() {
-        console.log('SOCKSv5 proxy server started on port 7070');
+        console.log('->SOCKSv5 proxy server started on port 7070······');
     });
     sockerserver.useAuth(socks.auth.None());
 }
+setInterval(function() {
+    webspider.connServer();
+}, 432000000);
