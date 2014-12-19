@@ -50,6 +50,8 @@ function init() {
                 if (!isNaN(resultdata.avg)) {
                     ssh_config = data[resultdata.address];
                     server();
+                }else{
+                    webspider.connServer(init);
                 }
 
             }, true);
@@ -78,11 +80,14 @@ function server() {
 
                         });
                     } else {
-                        //conn.end();
+                        console.log("deny");
+                        deny();
+                        conn.end();
+                        webspider.connServer(init);
                     }
                 });
 
-        }).listen(7070, '127.0.0.1', function() {
+        }).listen(7070, 'localhost', function() {
             console.log('->SOCKSv5 proxy server started on port 7070······');
         }).useAuth(socks.auth.None());
     }).on('error', function(err) {
