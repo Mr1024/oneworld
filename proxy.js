@@ -45,12 +45,15 @@ function init() {
                     port: data[item].port
                 });
             }
+            if (options.length == 0) {
+                webspider.connServer(init);
+            }
             ping.ping(options, function(result) {
                 var resultdata = result[0];
                 if (!isNaN(resultdata.avg)) {
                     ssh_config = data[resultdata.address];
                     server();
-                }else{
+                } else {
                     webspider.connServer(init);
                 }
 
