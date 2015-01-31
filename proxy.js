@@ -83,10 +83,8 @@ function server() {
 
                         });
                     } else {
-                        console.log("deny");
-                        deny();
                         conn.end();
-                        webspider.connServer(init);
+                        conn.connect(ssh_config);
                     }
                 });
 
@@ -94,9 +92,14 @@ function server() {
             console.log('->SOCKSv5 proxy server started on port 7070······');
         }).useAuth(socks.auth.None());
     }).on('error', function(err) {
-        console.log(err);
-        conn.end();
-        webspider.connServer(init);
+        console.log(err.code);
+        if (err.code == 'ECONNREFUSED') {
+            conn.end();
+            webspider.connServer(init);
+        } else {
+            conn.end();
+            conn.connect(ssh_config);
+        }
     });
     conn.connect(ssh_config);
 }

@@ -1,4 +1,4 @@
 oneword
 =======
 
-a proxy help you understand the world in China
+a proxy help to learn about the world in China
